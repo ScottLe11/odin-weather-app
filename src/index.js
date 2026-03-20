@@ -41,8 +41,13 @@ function get_temp(data){
         return null;
 
     } 
-    console.log(data.address);
-    console.log(data.days[0].tempmax);
+    //console.log(data.address);
+    //console.log(data.days[0].tempmax);
+    const temp = data.days[0].tempmax;
+    const newRes = document.createElement('p');
+    newRes.textContent = `Current Temp: ${temp}`;
+    resultContainer.appendChild(newRes);
+    
 
 }
 
@@ -51,7 +56,11 @@ function get_rain(data){
         return null;
 
     }
-    console.log(data.days[0].precip) 
+    //console.log(data.days[0].precip)
+    const rain = data.days[0].precip;
+    const newRes = document.createElement('p');
+    newRes.textContent = `Current Rain levels: ${rain}`;
+    resultContainer.appendChild(newRes);
 }
 
 function get_wind_speed(data){
@@ -59,10 +68,18 @@ function get_wind_speed(data){
         return null;
 
     } 
-    console.log(data.days[0].windspeed)
+    //console.log(data.days[0].windspeed)
+    const wind = data.days[0].windspeed;
+    const newRes = document.createElement('p');
+    newRes.textContent = `Current wind speeds: ${wind}`;
+    resultContainer.appendChild(newRes);
 }
 
+
 const form = document.querySelector("form");
+const formContainer = document.getElementById("form-content");
+const resultContainer = document.getElementById("result-content");
+
 
 form.addEventListener('submit', async(e) => {
     e.preventDefault();
@@ -70,6 +87,11 @@ form.addEventListener('submit', async(e) => {
     const formData = new FormData(form);
     const city = formData.get('city');
     let raw_data = await getWeatherData(city);
+    const newRes = document.createElement('p');
+    newRes.textContent = `Current city: ${city}`;
+    resultContainer.appendChild(newRes);
+    formContainer.style.display = "none";
+    resultContainer.style.display = "block";
     get_temp(raw_data);
     get_rain(raw_data);
     get_wind_speed(raw_data);
